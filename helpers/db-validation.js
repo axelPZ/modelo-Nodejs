@@ -35,9 +35,22 @@ const userExist = async( id = '' ) => {
     }
 }
 
+// VALIDAR LAS COLECCIONES PERMITIDAD AL ACTUALIZAR LA IMAGEN
+
+const validCollection = ( collection = '', collections = []) => {
+
+    const include = collections.includes( collection );
+    if( !include ){
+        throw new Error(`La coleccion ${ collection }, no es permitida. Permitidas: ${ collections }`);
+    }
+
+    return true;
+}
+
 
 module.exports = {
     isValidRole,
     emailExists,
-    userExist
+    userExist,
+    validCollection
 }

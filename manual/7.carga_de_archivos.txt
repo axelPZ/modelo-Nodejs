@@ -1,0 +1,32 @@
+
+CARGAR ARCHIVOS
+                                1). se crear el archivo uploads en controlador y rutas
+                                2). se agrega la ruta de uploads al servidor
+
+CARGAR ARCHIVOS LOCAL
+
+npm i express-fileupload        1). se instala para trabajar con los archivos en el servidor https://www.npmjs.com/package/express-fileupload
+                                2). agregamos el parquete 'express-fileupload' a las importaciones del servidor
+                                3). se agrega el fileupload en los middleware del servidor
+                                4). se crear el metodo fileUpload dentro del controlador
+                                5). se crea el helpers de file-upload
+                                6). se crea el metodo fileUpload y se importa el path para trabajar con las path del servidor
+npm i uuid                      7). se instala para poder generar nombres aleatorios que no se repiten
+                                8). se importa el v4: uuidv4  dentro del helpers para cambiar el nombre
+                                9). se crea la carpeta uploads que es donde se aguardaran los archivos
+                                10). se crea el middleware que validara si se esta mandando un archivo y lo importamos en las rutas
+                                11). se llama nuestro helpers desde el controlador
+                                12). se agrega al middleware de fileUpload el "createParentPath: true" para que me agrege la carpeta si esta no existe
+                                13). se configura el controlador de uploads
+
+ACTUALIZAR IMG DEL USUARIO
+
+                                1). Se crea la ruta de actualizacion de la imagen
+                                2). crear el metodo que valide las colecciones permitidas en el helper db-validator
+                                3). se importa la validacion de las colecciones en las rutas
+                                4). se crea el metodo de updateImg
+
+MOSTRAR IMAGEN DEL USUARIO
+
+                                1). se crea la ruta de carga de imgen y se le agregan las validaciones necesarias
+                                2). se crea el metodo en el costructor
