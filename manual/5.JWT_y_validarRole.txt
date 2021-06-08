@@ -1,0 +1,27 @@
+
+CREACION DEL LOGIN Y UTLIZAR EL JWT
+
+                                1). creamos una nueva ruta en el servidor
+                                2). creamos el archivo de auth en las rutas y se configura
+                                3). creamose el archivo de auth en los controladores y se configura
+ npm i jsonwebtoken             4). se instala npm i jsonwebtoken para trabajar con las JWT
+                                5). para trabajar con la libreia hay que configurarla para poder trabajarla como promesa, se crea el archivo createJWT en los helpers
+                                6). creamos la llave secreata en los .env
+                                7). se llama el helper desde el controlador para generar el token
+
+PROTEGER LAS RUTAS CON EL token
+
+                                1). creamos un middleware para validar el token llamado validate-JWT
+                                2). lo impotamos en las rutas del usuario y lo ponemos al principio de las validaciones
+
+VALIDAR SI EL USUARIO EL ADMIN
+
+                                1). creamos un middleware con el nombre validar-role
+                                2). para pasarle los tipos de role que seran permitidos se agrega otro metodo en validar-role llamado has-role
+                                3). al llamar el middleware desde las rutas se le especifica los roles que seran aceptados
+
+OPTIMIZAR LAS EXPORTACIONES DE LOS middleware
+
+                                1). en la carpeta middleware se crea un index.js 
+                                2). ahi se llaman los metodos de los demas middleware y se exportan
+                                3). solo se llama el index de los middleware desde las rutas especificando los metodos a utilizar

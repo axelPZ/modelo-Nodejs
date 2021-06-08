@@ -9,9 +9,10 @@ class Server {
         this.app = express();
         this.port = process.env.PORT;
 
-        // dividir las rutas
+        // divicion de las rutas
         this.paths = {
-            user: '/api/users'
+            user: '/api/users',
+            auth: '/api/auth'
         }
 
         // coneccion a la base de datos
@@ -46,7 +47,8 @@ class Server {
 
     routes(){
 
-       this.app.use(this.paths.user, require('../routes/user'));
+       this.app.use( this.paths.user, require('../routes/user') ) ;
+       this.app.use( this.paths.auth, require('../routes/auth') );
     }
 
     listen(){

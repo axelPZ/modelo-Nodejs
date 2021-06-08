@@ -1,0 +1,7 @@
+// SERVIDOR CON BASE DE DATOS MONGOOSE
+
+npm install mongoose		    1). instalar mongoose ver guia en https://mongoosejs.com/
+			
+				                2). Se crea la carpeta de database y el archivo de configuracion y se configura la base de datos
+				
+				                3). configuramos la coneccion en un asincrono en el modelo del servidor

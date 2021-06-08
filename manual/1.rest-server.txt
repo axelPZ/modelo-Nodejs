@@ -1,0 +1,40 @@
+
+#Nota: pasos para crear el restServer con express
+
+//SERVIDOR BASE
+
+npm init -y			1). configura y creal el packe.json
+
+					2). se crea el app.js punto de entrada de la app
+
+npm i express		3). se instala express para las rutas https://www.npmjs.com/package/express
+
+npm i dotenv		4). se instala dotenv para las variables de entorno https://www.npmjs.com/package/dotenv
+
+					5). se https://www.npmjs.com/package/express y se copia el modelo
+
+					6). se configuara el puerto en el .env
+
+					7). se configura la parte del servidor por en el modelo
+
+					8). se crea el primer middleware para especificar la carpeta publica 
+
+npm i cors			9). se instala el cors para que se pueda accedera nuestro servidor
+
+					10). se agrega el cors a los middleware https://www.npmjs.com/package/cors
+
+					11). se crea la carpeta routes y el archivo que va a manejar( user ) y lo configuramos
+
+					12). se crea el constructor y sus metodos luego se importa en las rutas y se llama sus metodos apartir de cada ruta
+
+					13). configurar el server para que reciva la informacion en formato JSON, se agrega el los middleware
+
+
+
+
+
+
+
+
+
+				

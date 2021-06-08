@@ -70,7 +70,6 @@ const update = async( req = request, res = response ) => {
     const user = await User.findByIdAndUpdate(id, info, {new: true});
 
     res.status(200).json({
-        user1,
         user
             });
 }
@@ -81,16 +80,18 @@ const update = async( req = request, res = response ) => {
 const deleteUser = async( req = request, res = response ) => {
     const { id } = req.params;
 
+    // obtnego el id del usuario que quiere eliminar al usuario que se agrego en la request al validar el JWT
+    const  userEliminar  = req.user;
+
     // eliminar definitivamente el usuario
         //const user = await User.findByIdAndDelete( id );
 
     // solo cambiarle el estado 
-    const user = await User.findByIdAndUpdate( id, { estado: false} );
-
-
+    const userEliminado = await User.findByIdAndUpdate( id, { estado: false} );
     res.status(200).json({
         msg: 'Se a eliminado correctamente el usuario',
-        id
+        userEliminado,
+        userEliminar
     });
 }
 

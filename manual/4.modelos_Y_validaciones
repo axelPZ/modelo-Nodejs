@@ -1,0 +1,28 @@
+
+// CREACION DE MODELOS
+
+				                1). en la carpeta modelo creamos el archivo del modelo de nuestro usuario y lo configuramos
+			
+				                2). importamos el modelo en el controlador para utilizarlo para crear el CRUD del usuario
+				
+				                3). agregamos el primer usuario de prueba
+
+npm i bcryptjs			        4). para encriptar la contrasenia
+
+npm i express-validator		    5). validar los campos
+ 
+				                6). importamos el check del expres-validator en las rutas
+
+				                7). creamos las validaciones de los campos que son obligatorios
+
+				                8). para validar que todo los campos se crearon correctamente, creamos la carpeta middleware y en el el archivo validateFilds 
+
+				                9). importamos el archivo en las rutas y lo ponemos al final de las validaciones
+
+validar role con la BD
+
+				                10). creamos el campo role en BD y agregamos los roles permitidos luego creamos su modelo
+
+				                11). creamos la carpeta herlpers y ahi creamos un archivo donde estaran las validaciones que se usen contra la base de datos
+
+				                12). al campo del check del role( check('role') ) se le agrega el custom y el helper de la validacion = ( check('role').custom( validacion ),
