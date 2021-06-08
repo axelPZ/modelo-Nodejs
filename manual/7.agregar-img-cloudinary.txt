@@ -1,0 +1,15 @@
+
+// GUARDAR IMAGEN EN CLOUDINARY
+
+                                            1). se crea una cuenta en CLOUDINARY https://cloudinary.com/
+npm i cloudinary                            2). se instala cloudinary que se encuentra en https://www.npmjs.com/package/cloudinary
+                                            3). la URL propia que da cloudinary se copia en los .env
+                                            4). se crea la ruta
+                                            5). se crea el middleware que validara si se esta mandando un archivo y lo importamos en las rutas
+                                            6). crear el metodo que valide las colecciones permitidas en el helper db-validator
+                                            7). se crea la conexion a cloudinary en el controlador
+                                            8). se crea el metodo para guardar la imagne en cloudinary
+
+// VER IMAGEN   
+                                            1). se crea la ruta de carga de imgen y se le agregan las validaciones necesarias
+                                            2). se crea el metodo en el costructor

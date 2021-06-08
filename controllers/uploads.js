@@ -2,90 +2,79 @@ const { response } = require('express');
 
 // para trabajar con las rutas, NodeJs
 const path = require('path');
-// para trabajar con los file, NodeJs
-const fs = require('fs');
 
-const  { fileUploads }  = require('../helpers/file-upload');
+// para ingresar a cloudinary
+const cloudinary = require('cloudinary').v2;
+cloudinary.config( process.env.CLOUDINARY_URL);
 
 const User = require('../models/user');
 
-// SUBIR ARCHIVOS
-const fileUpload = async (req, res = response ) => {
-
-    try {
-    
-       // GUARDAR ARCHIVO
-
-        // si queremos especificar la carpeta y las extenciones
-            // const name = await fileUploads( req.files, ['txt'], 'textos');
-
-        // si se quiere especificar solo la carpeta y que tomo las extenciones por defecto
-            // const name = await fileUploads( req.files, undefined, 'textos');
-
-        const name = await fileUploads(req.files);
-
-        res.status(200).json({
-            msg:'archivo subido correctamente',
-            name
-        });
-        
-    } catch (msg) {
-        res.status(400).json({ msg });
-    }
-}
-
-
-// GUARDAR O ACTUALIZAR IMAGEN AL USUARIO
-    const updateImg = async(req, res =  response) => {
-
+const uptadeImgCloudinary = async(req, res =  response) =>
+    {
+        //extraigo los datos de la request
         const { id, collection } = req.params;
-        
-        // traemos el modelo segun la coleccion
-          let model;
-          switch (collection) {
 
-              case 'users':
-                  model = await User.findById(id);
-                  if( !model ){
-                      return res.status(400).json({
-                          msg: `No existe el usuario con el id ${ id }`
-                      });
-                  }
-                  break;
+        let model;
+        switch (collection) {
+            case 'users':
 
-              default:
-                  res.status(500).json({ msg: 'instruccion no programada aun'});
-                  break;
-          }
-  
-          // Limpiar imagenes previas
-            if( model.img ){
-  
-              // creamos el path donde se encuentra la imagen anteriror
-              const pathImagen = path.join( __dirname, '../uploads', collection, model.img);
-  
-              //verificamos si existe la imagen
-              if( fs.existsSync( pathImagen ) ){
-  
-                  //borramos la imagen
-                  fs.unlinkSync( pathImagen );
-              }
-          }
-  
-          //actualizar imagen
-          const name = await fileUploads(req.files, undefined, collection);
-          model.img = name;
-          model.save();
-  
-          res.status(200).json({ 
-              msg: 'Imagen actualizada correctamente',
-              model
-            });
+                model = await User.findById(id);
+                if( !model ){
+                    return res.status(400).json({
+                        msg: `No existe el usuario con el id ${ id }`
+                    });
+                }
+                
+                break;
+            default:
+                res.status(500).json({ msg: 'instruccion no programada aun'});
+                break;
+        }
+
+        // Limpiar imagenes previas
+        if( model.img ){
+
+
+            //el id de la imagen biene al final del url, necesitamos sacarla y quitarle el .jpg
+            //https://res.cloudinary.com/node-restserver/image/upload/v1621287658/ut1lozt5poubexyj6rq0.jpg
+
+            // sacar la url de la imagen desde el modelo
+                // creamos un array de la ruta separado por /
+                const nameArr = model.img.split('/');
+
+                // obtenemos el ultimo elemento del arreglo
+                const name = nameArr[ nameArr.length -1 ];
+
+                // ya teniendo el ultimo elemento del arreglo tengo que quitarle la extensio
+                // v1621287658/ut1lozt5poubexyj6rq0.jpg
+                
+                // obtengo el primer elemeto del arreglo que me crea split 
+                const [ public_id ] = name.split('.');
+                
+                //ahora borrarmos la iimagen de cloudinary
+                cloudinary.uploader.destroy( public_id );
+        }
+
+        //subir imagen a cloudinary
+        const { tempFilePath } = req.files.archivo;
+
+        //de la respuesta destructuro el "secure_url" que es donde se encuentra la imagen en cloudinary
+        const { secure_url } = await cloudinary.uploader.upload( tempFilePath );
+
+        // le agrego ala propiedad del modelo el nombre de la imagen
+        model.img = secure_url;
+
+        //guardo o actualizo en la basse de datos la imagen
+         model.save();
+
+        res.status(200).json({ 
+            msg: 'Imagen actualizada correctamente',
+            model
+        });
     }
 
-// MOSTRAR LA IMAGEN
-    const getImg = async(req, res = response) => {
-        
+    const getImage = async( req, res = response ) => {
+
         const { id, collection } = req.params;
 
         let model;
@@ -103,27 +92,23 @@ const fileUpload = async (req, res = response ) => {
                 break;
         }
 
-        // Limpiar imagenes previas
+        // verificamos si existe la image
         if( model.img ){
 
-            // __dirname = igual al baseUrl() de php, nos dirigimos a la carpeta "uploads" le decimos que coleccion, y luego el nombre de la imagen
-            const pathImagen = path.join( __dirname, '../uploads', collection, model.img);
-
-            //verificamos si existe la imagen
-            if( fs.existsSync( pathImagen ) ){
-                
-                //cargar la imagen
-                return res.sendFile( pathImagen );
-            }
+            const { img } = model;
+          res.status(200).json({ 
+            model,
+            img
+          });
+           
         }
 
         // si no existiera la imagen regresamos una por defecto
         const pathImagen = path.join( __dirname, '../assets', 'no-image.png');
         return res.sendFile( pathImagen );
-}
+    }
 
 module.exports = {
-    fileUpload,
-    updateImg,
-    getImg
+    uptadeImgCloudinary,
+    getImage 
 }
