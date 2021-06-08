@@ -1,0 +1,6 @@
+
+AGREGAMOS UN BUSCADOR DE USUARIOS
+
+                    1). se agrega un nuevo archivo de search ( buscar ) en las rutas
+                    2). se   ''   '' ''  ''''      '' search en los controladores
+                    3). se configura el server agregandole la nueva ruta de buscar

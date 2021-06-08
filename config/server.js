@@ -12,7 +12,8 @@ class Server {
         // divicion de las rutas
         this.paths = {
             user: '/api/users',
-            auth: '/api/auth'
+            auth: '/api/auth',
+            search: '/api/search'
         }
 
         // coneccion a la base de datos
@@ -49,6 +50,7 @@ class Server {
 
        this.app.use( this.paths.user, require('../routes/user') ) ;
        this.app.use( this.paths.auth, require('../routes/auth') );
+       this.app.use( this.paths.search, require('../routes/search') );
     }
 
     listen(){
